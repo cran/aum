@@ -83,6 +83,7 @@ aum_diffs <- structure(function
     stop("example must be integer vector but has class: ", class(example)[1])
   }
   out <- data.table(example, pred, fp_diff, fn_diff)[!is.na(example)]
+  setkey(out, example, pred)
   class(out) <- c("aum_diffs", class(out))
   out
 ### data table of class "aum_diffs" in which each rows represents a
@@ -177,7 +178,7 @@ aum_diffs_penalty <- structure(function
   denominator="count"
 ### Type of diffs, either "count" or "rate".
 ){
-  example <- min.lambda <- fp <- fn <- n.zero <- more <- NULL
+  example <- min.lambda <- fp <- fn <- n.zero <- more <- . <- NULL
   ## Above to silence CRAN check NOTE.
   for(cname in c("fp", "fn", "min.lambda")){
     if(!is.numeric(errors.df[[cname]])){
@@ -189,6 +190,9 @@ aum_diffs_penalty <- structure(function
     stop("errors.df must have integer or character column named example")
   }
   err.dt <- as.data.table(errors.df)[order(example, -min.lambda)]
+  if(!missing(pred.name.vec)){
+    err.dt <- err.dt[example %in% pred.name.vec]
+  }
   prob.dt <- err.dt[, {
     tab <- table(min.lambda)
     data.table(
@@ -208,9 +212,6 @@ aum_diffs_penalty <- structure(function
       "need only one min.lambda per example, problems with more are (example:min.lambda) ",
       paste(bad.ex.vec, collapse=" "))
   }
-  if(identical(denominator, "rate")){
-    err.dt[, `:=`(max.fp=max(fp), max.fn=max(fn)), by=example]
-  }
   with(err.dt, {
     is.end <- min.lambda == 0
     mydiff <- function(x){
@@ -220,8 +221,8 @@ aum_diffs_penalty <- structure(function
     fn_diff <- mydiff(fn)
     keep <- fp_diff != 0 | fn_diff != 0
     if(identical(denominator, "rate")){
-      fp.denom <- max.fp[keep]
-      fn.denom <- max.fn[keep]
+      fp.denom <- sum(fp_diff)
+      fn.denom <- -sum(fn_diff)
     }else{
       fp.denom <- 1
       fn.denom <- 1

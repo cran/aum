@@ -1,60 +1,84 @@
-TODOs
+Changes in version 2023.4.4
 
-2022.2.7
+- takes too long on CRAN, TODO.
 
-Add arXiv link to DESCRIPTION, clarify outputs in aum_diffs.
+Changes in version 2023.4.3
 
-2022.2.3
+- reformat NEWS, for CRAN.
+- faster examples for aum_linear_model_cv and aum_line_search.
 
-Remove un-necessary C++ code, just keep aum_sort and interface.
+Changes in version 2023.3.31
 
-2022.1.27
+- Line search C++ code review, exclude speed and line search vignettes from CRAN.
 
-rename test file.
+Changes in version 2023.2.21
 
-2021.9.23
+- aum_diffs_penalty now correctly handles denominator="rate" (previously there could be problems if there are more examples in error table than in pred.name.vec).
 
-aum_sort.cpp: fix read out of bound when err_N=1, use std::sort
-instead of qsort.
+Changes in version 2023.2.15
 
-2021.3.9
+- Ties are now handled correctly in line search. aum_line_search$line_search_result contains new columns intersections and intervals, which are greater than 1 if there are any ties. Also new column q.size contains the number of step sizes in the queue at each iteration.
 
-vignette comparing logistic regression and other loss functions to aum
-minimization.
+Changes in version 2023.2.3
 
-2021.3.2
+- aum_line_search$line_search_result contains new columns aucAtStep and aucAfterStep.
 
-Use qsort (standard C) instead of qsort_r (not standard).
+Changes in version 2022.12.8
 
-2021.2.20
+- bugfix in aum_diffs_penalty(denominator="rate"), which previously incorrectly normalized for each example, but now correctly normalizes based on the total error over all examples.
 
-error checking for min.lambda values input to aum_diffs_penalty.
+Changes in version 2022.12.7
 
-new aum_sort_interface C++ function (faster), older function renamed
-to aum_map_interface, separate source and header files.
+- aum_linear_model and aum_linear_model_cv with plot and predict methods.
 
-2021.2.16
+Changes in version 2022.12.1
 
-aum supports names for predictions (copied to row names of
-derivative_mat).
+- aum_line_search function with plot method.
 
-2021.2.15
+Changes in version 2022.2.7
 
-more C++ error checking / tests.
+- Add arXiv link to DESCRIPTION, clarify outputs in aum_diffs.
 
-vignette comparing speed with penaltyLearning::ROChange.
+Changes in version 2022.2.3
 
-2021.2.14
+- Remove un-necessary C++ code, just keep aum_sort and interface.
 
-aum_diffs, aum_diffs_binary, aum_diffs_penalty for creating error
-diffs data frame required for input to aum.
+Changes in version 2022.1.27
 
-aum_errors for converting aum_diffs to canonical error functions
-(which start at fp=0 and end at fn=0). plot.aum_diffs uses this to
-show a default plot of the error functions.
+- rename test file.
 
-fn.not.zero example data taken from feaure-learning-benchmark.
+Changes in version 2021.9.23
 
-2021.2.12
+- aum_sort.cpp: fix read out of bound when err_N=1, use std::sort instead of qsort.
 
-First draft.
+Changes in version 2021.3.9
+
+- vignette comparing logistic regression and other loss functions to aum minimization.
+
+Changes in version 2021.3.2
+
+- Use qsort (standard C) instead of qsort_r (not standard).
+
+Changes in version 2021.2.20
+
+- error checking for min.lambda values input to aum_diffs_penalty.
+- new aum_sort_interface C++ function (faster), older function renamed to aum_map_interface, separate source and header files.
+
+Changes in version 2021.2.16
+
+- aum supports names for predictions (copied to row names of derivative_mat).
+
+Changes in version 2021.2.15
+
+- more C++ error checking / tests.
+- vignette comparing speed with penaltyLearning::ROChange.
+
+Changes in version 2021.2.14
+
+- aum_diffs, aum_diffs_binary, aum_diffs_penalty for creating error diffs data frame required for input to aum.
+- aum_errors for converting aum_diffs to canonical error functions (which start at fp=0 and end at fn=0). plot.aum_diffs uses this to show a default plot of the error functions.
+- fn.not.zero example data taken from feaure-learning-benchmark.
+
+Changes in version 2021.2.12
+
+- First draft.
