@@ -31,6 +31,8 @@ for computing Area Under Minimum via \code{\link{aum}} function, and plotted via
 
 \examples{
 
+if(require("data.table"))setDTthreads(1L)#for CRAN check.
+
 ## Simple synthetic example with two changes in error function.
 simple.df <- data.frame(
   example=1L,
@@ -69,7 +71,7 @@ if(require("ggplot2")){
     geom_segment(aes(
       -log(min.lambda), value,
       xend=-log(max.lambda), yend=value,
-      color=variable, size=variable),
+      color=variable, linewidth=variable),
       data=fn.not.zero.tall)+
     geom_point(aes(
       -log(min.lambda), value,
